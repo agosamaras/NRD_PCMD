@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pcmd-server
+  labels:
+    app: pcmd-server
+spec:
+  ports:
+  - protocol: TCP
+    targetPort: 8080
+    port: 8888
+  selector:
+    app: pcmd-server
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: pcmd-server
+  name: pcmd-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pcmd-server
+  template:
+    metadata:
+      labels:
+        app: pcmd-server
+    spec:
+      # imagePullSecrets:
+      #   - name: nokia-repository
+      containers:
+        - image: agosamaras/nrd_pcmd:latest
+          imagePullPolicy: Always
+          name: pcmd-server
+          # env:
+          #   - name: SMF_URL
+          #     value: "http://SMFPlatform/manager/rst/Authorization"
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+      restartPolicy: Always
