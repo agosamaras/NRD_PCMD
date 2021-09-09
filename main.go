@@ -9,7 +9,7 @@ import (
 
 func storeData(ctx *gin.Context) {
 	// Validate input
-	var input map[interface{}]interface{} //TODO(Nikos K): you should bind to input the type that suits you best.
+	var input []interface{} //TODO(Nikos K): you should bind to input the type that suits you best.
 	if err := ctx.ShouldBindJSON(&input); err != nil {
 		log.Error("Unable to handle request --> ", err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

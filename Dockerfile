@@ -11,8 +11,6 @@ RUN go mod download
 
 # Copy the go source
 COPY main.go main.go
-COPY apis/ apis/
-COPY controllers/ controllers/
 
 # Build
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GO111MODULE=on go build -a -o manager main.go
@@ -25,16 +23,6 @@ FROM gcr.io/distroless/static:nonroot
 WORKDIR /
 COPY --from=builder /workspace/manager .
 USER nonroot:nonroot
+EXPOSE 8080
 
 ENTRYPOINT ["/manager"]
-
-# Check the below
-FROM python:3.8            
-
-RUN mkdir /src
-WORKDIR /src
-ADD . /src/
-RUN pip install -r Requirements/requirements.txt
-
-EXPOSE 8080
-CMD ["python", "/src/main.py"]
