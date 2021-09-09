@@ -1,4 +1,4 @@
-# Build the manager binary
+# Build the server binary
 FROM golang:1.16 as builder
 
 WORKDIR /workspace
@@ -13,16 +13,16 @@ RUN go mod download
 COPY main.go main.go
 
 # Build
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GO111MODULE=on go build -a -o manager main.go
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GO111MODULE=on go build -a -o server main.go
 
-# Use distroless as minimal base image to package the manager binary
+# Use distroless as minimal base image to package the server binary
 # Refer to https://github.com/GoogleContainerTools/distroless for more details
 FROM gcr.io/distroless/static:nonroot
 # If I want a shell also
 # FROM gcr.io/distroless/static:nonroot-debug as builder
 WORKDIR /
-COPY --from=builder /workspace/manager .
+COPY --from=builder /workspace/server .
 USER nonroot:nonroot
 EXPOSE 8080
 
-ENTRYPOINT ["/manager"]
+ENTRYPOINT ["/server"]

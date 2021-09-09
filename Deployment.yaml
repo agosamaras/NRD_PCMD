@@ -33,7 +33,7 @@ spec:
       # imagePullSecrets:
       #   - name: nokia-repository
       containers:
-        - image: agosamaras/nrd_pcmd:latest
+        - image: agosamaras/pcmd-server:latest
           imagePullPolicy: Always
           name: pcmd-server
           # env:

@@ -9,11 +9,11 @@ else
 GOBIN=$(shell go env GOBIN)
 endif
 
-all: manager
+all: server
 
-# Build manager binary
-manager: fmt vet
-	go build -o bin/manager main.go
+# Build server binary
+server: fmt vet
+	go build -o bin/server main.go
 
 # Run main.go
 run: fmt vet
