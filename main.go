@@ -9,14 +9,14 @@ import (
 
 func storeData(ctx *gin.Context) {
 	// Validate input
-	var input []interface{} //TODO(Nikos K): you should bind to input the type that suits you best.
+	var input []interface{} //TODO(user): you should bind to input the type that suits you best.
 	if err := ctx.ShouldBindJSON(&input); err != nil {
 		log.Error("Unable to handle request --> ", err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	log.Info("Storing/Modifying received Data")
-	// TODO(Nikos K): here you can modify to csv your json data and store
+	// TODO(user): here you can modify to csv your json data and store
 	// them accordingly
 	ctx.JSON(http.StatusCreated, input) // or c.IndentedJSON(http.StatusNotFound, gin.H{"message": "data stored."})
 }
